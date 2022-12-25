@@ -1,0 +1,40 @@
+@swag_from("docs/text.yml", methods=['GET'])
+@app.route('/text', methods=['GET'])
+def text():
+    json_response = {
+        'status_code': 200,
+        'description': "Original Teks",
+        'data': "Halo, apa kabar semua?",
+    }  
+
+    response_data = jsonify(json_response)
+    return response_data    
+
+@swag_from("docs/text_clean.yml", methods=['GET'])
+@app.route('/text-clean', methods=['GET'])
+def text_clean():
+    json_response = {
+        'status_code': 200,
+        'description': "Teks yanng sudah",
+        'data': re.sub(r'[^a-zA-z0-9]',' ',"Halo, apa kabar semua?"),
+    }  
+
+    response_data = jsonify(json_response)
+    return response_data
+
+
+
+@swag_from("docs/text_processing.yml", methods=['POST'])
+@app.route('/text-processing', methods=['POST'])
+def text_processing():
+    
+    text = request.form.get('text')
+    
+    json_response = {
+        'status_code': 200,
+        'description': "Teks yang sudah diproses",
+        'data': re.sub(r'[^a-zA-z0-9]',' ', text),
+    }  
+
+    response_data = jsonify(json_response)
+    return response_data
